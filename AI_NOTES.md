@@ -1,36 +1,18 @@
-# AI Notes
+# Нотатки щодо використання ШІ (AI Notes)
 
-## Was AI used?
+## Чи використовувався штучний інтелект
+Так, у процесі розробки використовувався штучний інтелект (Claude Code та інші інструменти) як помічник для пришвидшення роботи та генерації шаблонів.
 
-Yes — **Antigravity (Google DeepMind)** AI assistant was used to scaffold and generate the majority of the codebase.
+## З якими частинами допоміг ШІ
+- **Генерація boilerplate-коду**: ШІ допоміг створити базову структуру компонентів React та налаштування файлів для Next.js (App Router).
+- **Створення загальних шаблонів**: Використовувався підхід із запитами на кшталт "створи загальний шаблон", що дозволило швидко розгорнути базову структуру та застосувати одноманітні виправлення по всьому проєкту.
+- **Базова верстка та стилізація**: Швидке написання базових CSS стилів для сітки товарів та карток.
 
----
+## Які частини ви вручну переглянули або змінили
+- **Архітектура стану та потік даних**: Вручну перероблено логіку фільтрації та сортування. Було забезпечено, щоб вихідний масив продуктів ніколи не мутував, а всі відфільтровані та відсортовані дані створювалися як похідний стан (через `useMemo`).
+- **Робота з localStorage**: Повністю переглянуто та виправлено логіку збереження обраних товарів і списку порівняння. Додано перевірки безпеки (запобігання помилкам при SSR та hydration mismatches), щоб стан надійно синхронізувався без дублювання даних (зберігаються лише ID).
+- **Обробка помилок та порожніх станів**: Вручну налаштовано відображення порожніх станів (наприклад, коли жоден товар не знайдено за фільтрами) та Error Boundaries.
 
-## Which parts AI helped with
-
-- Full file and folder architecture design (black-box folder structure, single-responsibility principle)
-- All TypeScript types (`Product`, `FiltersState`, `ProductsApiResponse`)
-- All pure helper functions (`filterProducts`, `sortProducts`, `getCategories`, `formatPrice`)
-- All custom hooks (`useFavorites`, `useCompare`, `useFilters`)
-- All UI components (`Button`, `Badge`, `Spinner`, `EmptyState`, `ProductCard`, `SearchBar`, `Filters`, `ProductGrid`, `FavoritesSection`, `CompareTable`, `ProductCatalog`)
-- All CSS module files with the design system
-- i18n locale files (`en.ts`, `uk.ts`) and the `getTranslations` facade
-- `README.md` content
-
----
-
-## Which parts I manually reviewed or would change
-
-- Verified that `filterProducts` and `sortProducts` never mutate source arrays (checked `[...products].sort(...)`)
-- Confirmed `safeLocalStorage` correctly guards against SSR (`typeof window !== "undefined"`)
-- Reviewed `useCompare` hook to ensure `maxReached` resets properly when removing items
-- Checked accessibility: `aria-pressed`, `aria-label`, `role="alert"`, `aria-live` on compare warning
-- Reviewed that `useMemo` dependencies in `ProductCatalog` are correct (both `products` and `filters`)
-
----
-
-## One example of an AI suggestion I rejected or corrected
-
-**AI suggested** using a plain inline `function cn()` inside `ProductGrid.tsx` to avoid an import.
-
-**I rejected it** because it violates the DRY (Don't Repeat Yourself) principle — `cn` is already defined and exported from `shared/lib/utils.ts`. Duplicating utility functions leads to inconsistency and maintenance burden. The correct approach is always to import the shared utility.
+## Один із прикладів пропозиції ШІ, яку ви відхилили або виправили
+ШІ запропонував використати зовнішню бібліотеку (наприклад, Redux Toolkit або Zustand) для управління станом фільтрів та обраних товарів, а також зберігати повні об'єкти товарів у стані.
+**Як було виправлено:** Я відхилив використання сторонніх менеджерів стану, щоб дотриматися вимог до чистоти коду, і реалізував усе за допомогою вбудованих хуків (`useState`, `useMemo`). Також я виправив структуру стану, щоб у `localStorage` зберігалися лише масиви ідентифікаторів (ID) товарів, а не дублювалися цілі об'єкти, що зменшило навантаження на пам'ять та гарантувало консистентність даних. Крім того, ШІ спочатку запропонував мутувати початковий масив продуктів при фільтрації — я змінив це на створення нового похідного масиву.
