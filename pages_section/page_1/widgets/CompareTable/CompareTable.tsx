@@ -49,11 +49,12 @@ export const CompareTable = ({
       >
         {t("compare.maxReached")}
       </p>
-      <EmptyState
-        icon={<BarChart2 size={22} />}
-        title={t("compare.empty")}
-        className={cn(items.length > 0 && styles.hidden)}
-      />
+      <EmptyState.Root className={cn(items.length > 0 && styles.hidden)}>
+        <EmptyState.Icon>
+          <BarChart2 size={22} />
+        </EmptyState.Icon>
+        <EmptyState.Title>{t("compare.empty")}</EmptyState.Title>
+      </EmptyState.Root>
       <div
         className={cn(styles.tableWrapper, items.length === 0 && styles.hidden)}
       >

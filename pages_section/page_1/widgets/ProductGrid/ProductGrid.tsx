@@ -24,21 +24,34 @@ export const ProductGrid = ({
   const { t } = useTranslation();
   return (
     <section aria-label="Products grid">
-      <EmptyState
-        icon={<PackageSearch size={24} />}
-        title={t("states.empty")}
-        className={cn(products.length > 0 && styles.hidden)}
-      />
+      <EmptyState.Root className={cn(products.length > 0 && styles.hidden)}>
+        <EmptyState.Icon>
+          <PackageSearch size={24} />
+        </EmptyState.Icon>
+        <EmptyState.Title>{t("states.empty")}</EmptyState.Title>
+      </EmptyState.Root>
       <ul className={cn(styles.grid, products.length === 0 && styles.hidden)}>
         {products.map((product) => (
           <li key={product.id}>
-            <ProductCard
+            <ProductCard.Root
               product={product}
               isFavorite={favoriteIds.includes(product.id)}
               isCompared={compareIds.includes(product.id)}
               onFavoriteToggle={onFavoriteToggle}
               onCompareToggle={onCompareToggle}
-            />
+            >
+              <ProductCard.Image />
+              <ProductCard.Body>
+                <ProductCard.Meta />
+                <ProductCard.Title />
+                <ProductCard.Brand />
+                <ProductCard.Footer />
+              </ProductCard.Body>
+              <ProductCard.Actions>
+                <ProductCard.FavoriteButton />
+                <ProductCard.CompareButton />
+              </ProductCard.Actions>
+            </ProductCard.Root>
           </li>
         ))}
       </ul>

@@ -1,6 +1,7 @@
 import { en } from "../locales/en";
 import { uk } from "../locales/uk";
-import type { Translations } from "../locales/en";
+
+export type Translations = typeof en;
 
 const locales = new Map<string, Translations>([
   ["en", en],

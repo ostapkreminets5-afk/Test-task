@@ -31,21 +31,34 @@ export const FavoritesSection = ({
         {t("favorites.title")}
         <span className={styles.count}>{favorites.length}</span>
       </h2>
-      <EmptyState
-        icon={<Heart size={22} />}
-        title={t("favorites.empty")}
-        className={cn(favorites.length > 0 && styles.hidden)}
-      />
+      <EmptyState.Root className={cn(favorites.length > 0 && styles.hidden)}>
+        <EmptyState.Icon>
+          <Heart size={22} />
+        </EmptyState.Icon>
+        <EmptyState.Title>{t("favorites.empty")}</EmptyState.Title>
+      </EmptyState.Root>
       <ul className={cn(styles.grid, favorites.length === 0 && styles.hidden)}>
         {favorites.map((product) => (
           <li key={product.id}>
-            <ProductCard
+            <ProductCard.Root
               product={product}
               isFavorite
               isCompared={compareIds.includes(product.id)}
               onFavoriteToggle={onFavoriteToggle}
               onCompareToggle={onCompareToggle}
-            />
+            >
+              <ProductCard.Image />
+              <ProductCard.Body>
+                <ProductCard.Meta />
+                <ProductCard.Title />
+                <ProductCard.Brand />
+                <ProductCard.Footer />
+              </ProductCard.Body>
+              <ProductCard.Actions>
+                <ProductCard.FavoriteButton />
+                <ProductCard.CompareButton />
+              </ProductCard.Actions>
+            </ProductCard.Root>
           </li>
         ))}
       </ul>

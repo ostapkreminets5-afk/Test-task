@@ -1,5 +1,5 @@
 import styles from "./Spinner.module.css";
-import { cn } from "../../lib/utils";
+import { cn } from "../../../lib/utils";
 
 type SpinnerProps = {
   className?: string;
