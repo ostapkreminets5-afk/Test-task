@@ -1,4 +1,9 @@
 export const uk = {
+  catalog: {
+    title: "Каталог товарів",
+    of: "з",
+    products: "товарів",
+  },
   search: {
     placeholder: "Пошук за назвою, брендом або категорією...",
     label: "Пошук товарів",

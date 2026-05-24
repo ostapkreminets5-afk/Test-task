@@ -1,4 +1,9 @@
 export const en = {
+  catalog: {
+    title: "Product Catalog",
+    of: "of",
+    products: "products",
+  },
   search: {
     placeholder: "Search by title, brand, or category...",
     label: "Search products",
